@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Node.js SQLite Example</title>
+  <style></style>
+</head>
+
+<body>
+  <h1>Users</h1>
+  <ul id="userList"></ul>
+
+  <h2>Add User</h2>
+  <form action="/users" method="post">
+    <label for="name">Name:</label>
+    <input placeholder="digita teu nome ai btl" type="text" id="name" name="name">
+    <br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email">
+    <br>
+    <label for="senha">Senha:</label>
+    <input type="password" id="senha" name="senha">
+    <button id="btn-envio" type="submit">Add User</button>
+  </form>
+  <a href="/" id="login">Login</a>
+
+  <script defer>
+    async function fetchUsers() {
+      const response = await fetch('/users');
+      const data = await response.json();
+
+      const userList = document.getElementById('userList');
+      userList.innerHTML = '';
+
+      data.users.forEach(user => {
+        const li = document.createElement('li');
+        li.textContent = `${user.name} - ${user.email}`;
+        userList.appendChild(li);
+      });
+    }
+
+    const envio = async e => {
+      e.preventDefault();
+      const inputName = document.querySelector('#name').value;
+      const inputEmail = document.querySelector('#email').value;
+      const inputSenha = document.querySelector('#senha').value;
+      try {
+        const response = await fetch('/users', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ name: inputName, email: inputEmail,senha: inputSenha }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to add user: ${response.status}`);
+        }
+
+        // Atualize a lista de usuários após adicionar um novo
+        fetchUsers();
+      } catch (error) {
+        console.error('Error:', error.message);
+      }
+
+
+    }
+
+    const form = document.querySelector('form');
+
+    form.addEventListener('submit', envio)
+
+  </script>
+</body>
+
+</html>
