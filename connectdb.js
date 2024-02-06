@@ -20,15 +20,15 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/cadastro', (req, res) => {
-  res.sendFile('/public' + '/cadastro.html');
+  res.sendFile(__dirname + '/public' + '/cadastro.html');
 });
 
 app.get('/main', (req, res) => {
-  res.sendFile(__dirname+ '/public' + '/main.html');
+  res.sendFile(__dirname + '/public' + '/main.html');
 });
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname +'/public' +'/login.html');
+  res.sendFile(__dirname + '/public' +'/login.html');
 });
 
 
