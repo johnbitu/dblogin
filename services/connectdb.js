@@ -17,18 +17,20 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.json());
 
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(express.static('public'));
 
 app.get('/cadastro', (req, res) => {
-  res.sendFile(__dirname + '/public' + '/cadastro.html');
+  res.sendFile('cadastro.html', { root: '../public' });
 });
 
 app.get('/main', (req, res) => {
-  res.sendFile(__dirname + '/public' + '/main.html');
+  res.sendFile('main.html', { root: '../public' });
 });
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public' +'/login.html');
+  res.sendFile('login.html', { root: '../public' });
 });
 
 
