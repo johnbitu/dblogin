@@ -58,7 +58,7 @@
         if (!response.ok) {
           throw new Error(`Failed to add user: ${response.status}`);
         }
-
+ 
         // Atualize a lista de usuários após adicionar um novo
         fetchUsers();
       } catch (error) {
