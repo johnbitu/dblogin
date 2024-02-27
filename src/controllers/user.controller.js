@@ -1,7 +1,14 @@
-const soma = (req, res) => {
-    const soma  = 100 + 1;
+const create = (req, res) => {
+    const user = req.body;
+    
+    res.json(user)
+    
+    console.log(user);
+}
 
-    res.send({soma: soma});
-};
+module.exports = { create };
 
-module.exports = { soma };
+//quando for usar o json no insomnia, usar ""
+// exemplo:{
+//     "name:" "joão"
+// }
