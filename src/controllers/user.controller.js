@@ -1,10 +1,21 @@
 const create = (req, res) => {
-    const user = req.body;
+    const {name, username, email, password, avatar, background} = req.body;
     
-    res.json(user)
-    
-    console.log(user);
-}
+    if (!name || !username || !email || !password || !avatar || !background){
+        res.status(400).send({ message: "Preencha todos os campos para cadastro"});
+    }
+    res.status(201).send({
+        user: {
+            name,
+            username,
+            email,
+            password,
+            avatar,
+            background,
+        },
+        message: "Usuario criado com sucesso!"
+    });
+};
 
 module.exports = { create };
 
