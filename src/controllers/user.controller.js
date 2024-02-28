@@ -42,7 +42,20 @@ const findAll = async (req, res) => {
 
     res.send(users)
 }
-module.exports = { create, findAll };
+
+const findById = async (req, res) => {
+    const id = req.params.id
+
+    const user = await userService.findByIdService(id)
+
+    if(!user){
+        return res.status(400).send({ message: "Usuário não encontrado"})
+    }
+
+    res.send(user)
+}
+
+module.exports = { create, findAll, findById };
 
 //quando for usar o json no insomnia, usar ""
 // exemplo:{
