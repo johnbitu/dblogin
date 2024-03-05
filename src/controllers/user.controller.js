@@ -8,7 +8,7 @@ const create = async (req, res) => {
             return res.status(400).send({ message: "Preencha todos os campos para cadastro" });
         }
 
-        const user = await userService.create(req.body);
+        const user = await userService.createService(req.body);
 
         if (!user) {
             return res.status(400).send({ message: "Erro na criação de usuário" });
