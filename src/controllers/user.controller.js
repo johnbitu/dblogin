@@ -1,3 +1,4 @@
+const { default: mongoose } = require('mongoose');
 const userService =  require('../services/user.service')
 
 const create = async (req, res) => {
@@ -41,7 +42,7 @@ const findAll = async (req, res) => {
     }
 
     res.send(users)
-}
+};
 
 const findById = async (req, res) => {
     const id = req.params.id
@@ -53,9 +54,48 @@ const findById = async (req, res) => {
     }
 
     res.send(user)
-}
+};
 
-module.exports = { create, findAll, findById };
+const update = async (req, res) => {
+    try {
+        const { name, username, email, password, avatar, background } = req.body;
+
+        if (!name && !username && !email && !password && !avatar && !background) {
+            return res.status(400).send({ message: "Preencha todos os campos para cadastro" });
+        }
+
+        const id = req.params.id;
+
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).send({ message: "Id invalido" });
+        }  
+
+        const user = await userService.findByIdService(id);
+
+        if (!user) {
+            return res.status(400).send({ message: "Usuario não encontrado" });
+        }
+
+        await userService.updateService(
+            id,
+            name,
+            username,
+            email,
+            password,
+            avatar,
+            background
+        );
+        
+        res.send({message: "Usuário atualizado com sucesso!"});
+
+    } catch (error) {
+        // Caso ocorra algum erro durante o processo
+        console.error("Erro ao atualizar o usuário:", error);
+        res.status(500).send({ message: "Erro interno ao criar usuário" });
+    }
+};
+
+module.exports = { create, findAll, findById, update };
 
 //quando for usar o json no insomnia, usar ""
 // exemplo:{
