@@ -23,9 +23,26 @@ const updateService = (id,
         background
     });
 
+const deleteService = (id,
+    name,
+    username,
+    email,
+    password,
+    avatar,
+    background) => User.findByIdAndDelete({ _id: id},{
+        id,
+        name,
+        username,
+        email,
+        password,
+        avatar,
+        background
+    })
+
 module.exports = { // exportando como um objeto
     createService,
     findAllService,
     findByIdService,
-    updateService
+    updateService,
+    deleteService
 };

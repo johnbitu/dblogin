@@ -56,7 +56,7 @@ const update = async (req, res) => {
         const { name, username, email, password, avatar, background } = req.body;
 
         if (!name && !username && !email && !password && !avatar && !background) {
-            return res.status(400).send({ message: "Preencha todos os campos para cadastro" });
+            return res.status(400).send({ message: "Reescreva algum campo para ser atualizado" });
         }
 
         const id = req.id;
@@ -82,7 +82,34 @@ const update = async (req, res) => {
     }
 };
 
-module.exports = { create, findAll, findById, update };
+const delet = async (req, res) => {
+    try {
+        const { name, username, email, password, avatar, background } = req.body;
+
+        if (!name && !username && !email && !password && !avatar && !background) {
+            return res.status(400).send({ message: "Delete algum campo para ser atualizado" });
+        }
+
+        const id = req.id;
+
+        await userService.deleteService(
+            id,
+            name,
+            username,
+            email,
+            password,
+            avatar,
+            background
+        );
+        
+        res.send({message: "Usuário deletado com sucesso!"});
+    } catch (error) {
+        console.error("Erro ao deletar usuário:", error);
+        res.status(500).send({ message: "Erro interno ao deletar usuário" });
+    }
+};
+
+module.exports = { create, findAll, findById, update, delet };
 
 //quando for usar o json no insomnia, usar ""
 // exemplo:{
