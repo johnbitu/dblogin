@@ -1,5 +1,4 @@
-const { default: mongoose } = require('mongoose');
-const userService =  require('../services/user.service')
+const userService = require('../services/user.service')
 
 const create = async (req, res) => {
     try {
@@ -42,7 +41,7 @@ const findAll = async (req, res) => {
     }
 
     res.send(users)
-};
+}
 
 const findById = async (req, res) => {
 
@@ -72,8 +71,8 @@ const update = async (req, res) => {
             avatar,
             background
         );
-        
-        res.send({message: "Usuário atualizado com sucesso!"});
+
+        res.send({ message: "Usuário atualizado com sucesso!" });
 
     } catch (error) {
         // Caso ocorra algum erro durante o processo
@@ -101,8 +100,8 @@ const delet = async (req, res) => {
             avatar,
             background
         );
-        
-        res.send({message: "Usuário deletado com sucesso!"});
+
+        res.send({ message: "Usuário deletado com sucesso!" });
     } catch (error) {
         console.error("Erro ao deletar usuário:", error);
         res.status(500).send({ message: "Erro interno ao deletar usuário" });
