@@ -14,6 +14,10 @@ const create = async (req, res) => {
             return res.status(400).send({ message: "Erro na criação de usuário" });
         }
 
+        if(username === username.req.body){
+            return
+        };
+
         res.status(201).send({
             user: {
                 id: user._id,
