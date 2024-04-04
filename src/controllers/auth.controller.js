@@ -1,14 +1,17 @@
-const login = async (req, res) => {
+const bcrypt = require("bcrypt");
+const authService = require("../services/auth.service");
 
-    const {username, email, password} = req.body;
-    
-    try {
-        if ( !username || !password ) {
-            return res.status(400).send({ message: "Preencha o usuário e a senha" });
-        }
-    } catch (error) {
-        
-    }
-}
+const userService = require('../services/user.service');
 
-module.exports = login;
+
+// const authService = require('../services/authService');
+
+exports.login = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const token = await authService.login(username, password);
+    res.status(200).json({ token });
+  } catch (error) {
+    res.status(401).json({ error: error.message });
+  }
+};

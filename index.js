@@ -12,7 +12,7 @@ const port = 3000;
 
 app.use(express.json());
 app.use("/user", userRoute);
-app.use("/auth", authRoute);
+app.use("/login", authRoute);
 
 db();
 

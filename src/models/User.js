@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const { unique } = require('next/dist/build/utils');
 
 const UserSchema = new mongoose.Schema({
     name: {
@@ -9,6 +10,7 @@ const UserSchema = new mongoose.Schema({
     username: {
         type: String,
         require: true,
+        unique: true
     },
     email: {
         type: String,
@@ -18,6 +20,7 @@ const UserSchema = new mongoose.Schema({
     password: {
         type: String,
         require: true,
+        select: false,
     },
     avatar: {
         type: String,
