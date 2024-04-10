@@ -3,10 +3,7 @@ const authService = require("../services/auth.service");
 
 const userService = require('../services/user.service');
 
-
-// const authService = require('../services/authService');
-
-exports.login = async (req, res) => {
+const login = async (req, res) => {
   try {
     const { username, password } = req.body;
     const token = await authService.login(username, password);
@@ -14,4 +11,7 @@ exports.login = async (req, res) => {
   } catch (error) {
     res.status(401).json({ error: error.message });
   }
-};
+}
+// const authService = require('../services/authService');
+
+module.exports = { login };
