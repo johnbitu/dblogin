@@ -1,19 +1,17 @@
 const bcrypt = require('bcrypt');
+const dotenv = require("dotenv");
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-const login = async (username, password) => {
-  const user = await User.findOne({ username }).select("+password");
-  if (!user) {
-    throw new Error('User not found');
-  }
+const loginService = async (username, password) => User.findOne({ username: username }).select("+password");
 
-  const passwordMatch = await bcrypt.compare(password, user.password);
-  if (!passwordMatch) {
-    throw new Error('Invalid credentials');
-  }
-
-  return 'Login successful';
+const generateToken = (id) => {
+  return jwt.sign({ id: id }, process.env.JWT_TOKEN, {expiresIn: 86400});
 };
 
-module.exports = { login };
+
+// if (!passwordMatch) {
+//   throw new Error('Invalid credentials');
+// }
+
+module.exports = { loginService, generateToken };
