@@ -1,6 +1,8 @@
 const route = require('express').Router();
 
-const { getAll, create } = require('../controllers/news.controller')
+const News = require('../controllers/news.controller')
 
-route.post("/", newsController.create);
-route.get("/", newsController.getall);
+route.post("/", News.create);
+route.get("/", News.findAll);
+
+module.exports = route;

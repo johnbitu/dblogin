@@ -1,5 +1,5 @@
-const { createService } = require("../services/user.service");
-
+const News = require("../services/news.service");
+const { ObjectId } = require("mongoose");
 
 
 const create = async (req, res) => {
@@ -12,11 +12,11 @@ const create = async (req, res) => {
             })
         }
 
-        await createService({
+        await News.createService({
             title,
             text,
             banner,
-            id:"objectidfake1"
+            user: { _id: "65e9c818c7331574622c6f04"}
         })
 
         res.send(201);
@@ -25,9 +25,12 @@ const create = async (req, res) => {
     }
 }
 
-const getAll = () => {
-    const news = [];
+const findAll = async (req, res) => {
+    const news = await News.findAllNewsService();
+    if (news.length === 0) {
+        return res.status(400).send({ message: "there is no news recorded" });
+    }
     res.send(news)
 }
 
-module.exports = {create, getAll};
+module.exports = { create, findAll };

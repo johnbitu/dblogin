@@ -4,4 +4,4 @@ const createService = (body) => News.create(body);
 
 const findAllNewsService = () => News.find();
 
-module.exports = {createService};
+module.exports = { createService, findAllNewsService };
