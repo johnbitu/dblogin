@@ -5,27 +5,6 @@ const { ObjectId } = require("mongoose");
 const create = async (req, res) => {
     try{
 
-        const {authorization} = req.headers;
-
-        if(!authorization){
-            return res.send(401);
-        }
-
-        const parts = authorization.split(" ");// split() me retorna um ARRAY
-
-        if(parts.length !== 2){
-            return res.send(401);
-        }
-
-        const [schema, token] = parts
-
-
-        if(schema !== "Bearer"){
-            return res.send(401);// passando pra lembrar que o status 401 é de Unathorized
-        }
-
-        console.log(parts);
-
         const {title, text, banner} = req.body;
 
         if (!title || !banner || !text) {
@@ -38,7 +17,7 @@ const create = async (req, res) => {
             title,
             text,
             banner,
-            user: { _id: "65e9c818c7331574622c6f04"}
+            user: req.userId
         })
 
         res.send(201);
