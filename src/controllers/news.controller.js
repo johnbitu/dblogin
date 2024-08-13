@@ -1,3 +1,4 @@
+const { text } = require("express");
 const News = require("../services/news.service");
 const { ObjectId } = require("mongoose");
 
@@ -46,12 +47,34 @@ const findAll = async (req, res) => {
 
 
     const next = offset + limit;
-    const nextUrl = next < total ? `${currentUrl}?limit=${limit}&offset${offset}` : null ; // if ternario 
+    const nextUrl = next < total ? `${currentUrl}?limit=${limit}&offset=${offset}` : null ; // if ternario 
+
+    const previous = offset - limit < 0 ? null : offset - limit;
+    const previousUrl = previous != null ? `${currentUrl}?limit=${limit}&offset=${previous}` : null;
+
 
     if (news.length === 0) {
         return res.status(400).send({ message: "there is no news recorded" });
     }
-    res.send(news)
+    res.send({nextUrl,
+        previousUrl,
+        limit,
+        offset,
+        total,
+
+
+        results: news.map(item => ({
+            id: item._id,
+            title: item.title,
+            text: item.text,
+            banner: item.banner,
+            likes: item.likes,
+            comments: item.comments,
+            name: item.user.name,
+            userName: item.user.username,
+            userAvatar: item.user.avatar
+        }))
+    });
 }
 
 module.exports = { create, findAll };
