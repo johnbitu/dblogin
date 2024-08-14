@@ -77,31 +77,59 @@ const findAll = async (req, res) => {
             }))
         });
         
-    } catch (error) {
+    } catch (err) {
         res.status(500).send({ message: err.message });
     }
 }
 
-const topNews =  async (req, res) => {
-    const news = await News.topNewsService();
+const topNews = async (req, res) => {
+    try {
+        const news = await News.topNewsService();
 
-    if(!news){
-       return res.status(400).send({ message: err.message });
+        if(!news){
+        return res.status(400).send({ message: err.message });
+        }
+
+        res.send({
+            news: {
+                id: news._id,
+                title: news.title,
+                text: news.text,
+                banner: news.banner,
+                likes: news.likes,
+                comments: news.comments,
+                name: news.user.name,
+                userName: news.user.username,
+                userAvatar: news.user.avatar
+            }   
+        })
+    } catch (err) {
+        res.status(500).send({ message: err.message });
     }
-
-    res.send({
-        news: {
-            id: news._id,
-            title: news.title,
-            text: news.text,
-            banner: news.banner,
-            likes: news.likes,
-            comments: news.comments,
-            name: news.user.name,
-            userName: news.user.username,
-            userAvatar: news.user.avatar
-        }   
-    })
 }
 
-module.exports = { create, findAll, topNews };
+const findById = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const news = await News.findByIdService(id);
+
+        return res.send({
+            news: {
+                id: news._id,
+                title: news.title,
+                text: news.text,
+                banner: news.banner,
+                likes: news.likes,
+                comments: news.comments,
+                name: news.user.name,
+                userName: news.user.username,
+                userAvatar: news.user.avatar
+            }
+        })
+    } catch (err) {
+        res.status(500).send({ message: err.message });
+    }
+}
+
+module.exports = { create, findAll, topNews, findById };
