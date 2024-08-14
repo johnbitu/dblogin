@@ -22,7 +22,7 @@ const NewsSchema = new mongoose.Schema({
         ref: "User",
         required: true,
     },
-    Likes: {
+    likes: {
         type: Array,
         require: true,
     },

@@ -10,4 +10,6 @@ const findAllNewsService = (offset, limit) => News.find()
 
 const countNews = () => News.countDocuments();
 
-module.exports = { createService, findAllNewsService, countNews };
+const topNewsService = () => News.findOne().sort({_id: -1}).populate("user");
+
+module.exports = { createService, findAllNewsService, countNews, topNewsService };
