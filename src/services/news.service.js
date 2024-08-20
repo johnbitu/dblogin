@@ -14,4 +14,10 @@ const topNewsService = () => News.findOne().sort({_id: -1}).populate("user");
 
 const findByIdService = (id) => News.findById(id).populate("user");
 
-module.exports = { createService, findAllNewsService, countNews, topNewsService, findByIdService };
+const searchTitleService = (title) => News.find({
+    title: {$regex: `${title || ""}`, $options: "i" },// comando regex do proprio MongoDB, o $options é para especificar o case-sensitive
+})
+.sort({_id: -1})
+.populate("user");
+
+module.exports = { createService, findAllNewsService, countNews, topNewsService, findByIdService,searchTitleService };
